@@ -23,6 +23,6 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/images/app_logo.png"
+  image_path: "assets/images/logo.png"
   adaptative_icon_background: "#F5E6DE"
-  adaptative_icon_foreground: "assets/images/app_logo.png"
+  adaptative_icon_foreground: "assets/images/logo.png"
