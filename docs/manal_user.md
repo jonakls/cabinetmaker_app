@@ -2,7 +2,7 @@
 
 1. [Introducción](#introduccion)
 2. [Requisitos del sistema](#requisitos-del-sistema)
-3. [Instalación] (#instalacion)
+3. [Instalación](#instalacion)
 4. [Reporte de defectos visuales](#reporte-de-defectos-visuales)
 5. [Resolucion de problemas](#resolucion-de-problemas)
 6. [Consejos de seguridad](#consejos-de-seguridad)
