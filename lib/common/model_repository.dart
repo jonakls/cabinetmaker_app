@@ -10,4 +10,6 @@ abstract class ModelRepository<T extends Model> {
   void clear();
 
   T? findById(String id);
+
+  T? findByEmail(String email);
 }

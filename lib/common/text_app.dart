@@ -30,4 +30,5 @@ class TextApp {
   static const String buttonFilter = 'Filtrar';
   static const String buttonSort = 'Ordenar';
   static const String buttonApply = 'Aplicar';
+  static const String buttonGoogleLogin = 'Iniciar sesión con Google';
 }

@@ -28,4 +28,9 @@ class UserRepository implements ModelRepository<UserModel> {
   UserModel? findById(String id) {
     return _userMap[id];
   }
+
+  @override
+  UserModel? findByEmail(String email) {
+    return _userMap[email];
+  }
 }

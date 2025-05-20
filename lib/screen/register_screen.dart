@@ -1,10 +1,71 @@
 import 'package:cabinetmaker_app/common/color_palette.dart';
 import 'package:cabinetmaker_app/common/internal_router.dart';
 import 'package:cabinetmaker_app/common/text_app.dart';
+import 'package:cabinetmaker_app/service/account_service.dart';
 import 'package:flutter/material.dart';
 
-class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  final AccountService _accountService;
+
+  const RegisterScreen(this._accountService, {super.key});
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState(_accountService);
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  final AccountService _accountService;
+  final _formKey = GlobalKey<FormState>();
+
+  _RegisterScreenState(this._accountService);
+
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _cityController = TextEditingController();
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _phoneController.dispose();
+    _addressController.dispose();
+    _cityController.dispose();
+    super.dispose();
+  }
+
+  void _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      String name = _nameController.text;
+      String email = _emailController.text;
+      String password = _passwordController.text;
+      String phone = _phoneController.text;
+      String address = _addressController.text;
+      String city = _cityController.text;
+
+      _accountService
+          .register(name, email, password, phone, address, city)
+          .then((value) {
+            if (value != null) {
+              Navigator.pushNamed(context, InternalRouter.shopHome);
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('No se logro obtener el usuario')),
+              );
+            }
+          })
+          .onError((error, stackTrace) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Ocurrio un error al iniciar sesion'),
+              ),
+            );
+          });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,63 +91,110 @@ class RegisterScreen extends StatelessWidget {
               style: TextStyle(fontSize: 16, color: ColorPalette.textColor),
             ),
             const SizedBox(height: 10),
-            const TextField(
-              decoration: InputDecoration(
-                labelText: 'Correo electronico',
-                prefixIcon: Icon(Icons.email, color: ColorPalette.textColor),
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: _nameController,
+                    decoration: InputDecoration(
+                      labelText: 'Nombre de usuario',
+                      prefixIcon: Icon(
+                        Icons.verified_user,
+                        color: ColorPalette.textColor,
+                      ),
+                    ),
+                    validator:
+                        (value) => value!.isEmpty ? 'Campo obligatorio' : null,
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: InputDecoration(
+                      labelText: 'Correo electronico',
+                      prefixIcon: Icon(
+                        Icons.email,
+                        color: ColorPalette.textColor,
+                      ),
+                    ),
+                    validator:
+                        (value) => value!.isEmpty ? 'Campo obligatorio' : null,
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Contraseña',
+                      prefixIcon: Icon(
+                        Icons.security,
+                        color: ColorPalette.textColor,
+                      ),
+                    ),
+                    validator:
+                        (value) => value!.isEmpty ? 'Campo obligatorio' : null,
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: _phoneController,
+                    decoration: InputDecoration(
+                      labelText: 'Telefono',
+                      prefixIcon: Icon(
+                        Icons.phone,
+                        color: ColorPalette.textColor,
+                      ),
+                    ),
+                    validator:
+                        (value) => value!.isEmpty ? 'Campo obligatorio' : null,
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: _addressController,
+                    decoration: InputDecoration(
+                      labelText: 'Direccion',
+                      prefixIcon: Icon(
+                        Icons.home,
+                        color: ColorPalette.textColor,
+                      ),
+                    ),
+                    validator:
+                        (value) => value!.isEmpty ? 'Campo obligatorio' : null,
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: _cityController,
+                    decoration: InputDecoration(
+                      labelText: 'Ciudad',
+                      prefixIcon: Icon(
+                        Icons.location_city,
+                        color: ColorPalette.textColor,
+                      ),
+                    ),
+                    validator:
+                        (value) => value!.isEmpty ? 'Campo obligatorio' : null,
+                  ),
+                  const SizedBox(height: 30),
+                  ElevatedButton(
+                    onPressed: _submitForm,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: ColorPalette.accentColor,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 100,
+                        vertical: 15,
+                      ),
+                    ),
+                    child: const Text(
+                      TextApp.buttonRegister,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: ColorPalette.textColor,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 10),
-            const TextField(
-              decoration: InputDecoration(
-                labelText: 'Nombre de usuario',
-                prefixIcon: Icon(
-                  Icons.verified_user,
-                  color: ColorPalette.textColor,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            const TextField(
-              decoration: InputDecoration(
-                labelText: 'Nombre completo',
-                prefixIcon: Icon(Icons.person, color: ColorPalette.textColor),
-              ),
-            ),
-            const SizedBox(height: 10),
-            const TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'Contraseña',
-                prefixIcon: Icon(Icons.security, color: ColorPalette.textColor),
-              ),
-            ),
-            const SizedBox(height: 10),
-            const TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'Confirmar contraseña',
-                prefixIcon: Icon(Icons.security, color: ColorPalette.textColor),
-              ),
-            ),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                // TODO: Registro y creación de usuario
-                Navigator.pushNamed(context, InternalRouter.shopHome);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: ColorPalette.accentColor,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 100,
-                  vertical: 15,
-                ),
-              ),
-              child: const Text(
-                TextApp.buttonRegister,
-                style: TextStyle(fontSize: 16, color: ColorPalette.textColor),
-              ),
-            ),
           ],
         ),
       ),
