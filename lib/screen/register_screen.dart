@@ -5,19 +5,15 @@ import 'package:cabinetmaker_app/service/account_service.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
-  final AccountService _accountService;
-
-  const RegisterScreen(this._accountService, {super.key});
+  const RegisterScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState(_accountService);
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final AccountService _accountService;
+  static final AccountService _accountService = AccountService().get();
   final _formKey = GlobalKey<FormState>();
-
-  _RegisterScreenState(this._accountService);
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();

@@ -6,10 +6,10 @@ import 'package:cabinetmaker_app/service/google_auth_service.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
-  final GoogleAuthService _googleAuthService;
-  final AccountService _accountService;
+  static final GoogleAuthService _googleAuthService = GoogleAuthService().get();
+  static final AccountService _accountService = AccountService().get();
 
-  const LoginScreen(this._googleAuthService, this._accountService, {super.key});
+  const LoginScreen({super.key});
 
   static final TextEditingController _emailController = TextEditingController();
   static final TextEditingController _passwordController =

@@ -19,8 +19,6 @@ class MainApp extends StatelessWidget {
   /// Constructor for the MainApp widget.
   const MainApp({super.key});
 
-  static final AccountService _accountService = AccountService();
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,11 +28,10 @@ class MainApp extends StatelessWidget {
         InternalRouter.splash: (context) => const SplashScreen(),
         InternalRouter.home: (context) => const HomeScreen(),
         InternalRouter.login:
-            (context) => LoginScreen(GoogleAuthService(), _accountService),
-        InternalRouter.register: (context) => RegisterScreen(_accountService),
+            (context) => LoginScreen(),
+        InternalRouter.register: (context) => RegisterScreen(),
         InternalRouter.forgotPassword: (context) => const ForgotScreen(),
-        InternalRouter.profile: (context) => const ProfileScreen(),
-        InternalRouter.shopHome: (context) => const ShopHomeScreen(),
+        InternalRouter.shopHome: (context) => const ShopMenuNavigation(),
       },
     );
   }

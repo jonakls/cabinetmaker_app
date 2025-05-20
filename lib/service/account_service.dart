@@ -3,6 +3,19 @@ import 'package:cabinetmaker_app/common/storage/user_repository.dart';
 import 'package:cabinetmaker_app/model/user_model.dart';
 
 class AccountService {
+
+  // Singleton pattern
+  static final AccountService _instance = AccountService._internal();
+  factory AccountService() {
+    return _instance;
+  }
+
+  AccountService._internal();
+
+  static UserModel? _userModel = null;
+
+  UserModel? get currentUser => _userModel;
+
   final ModelRepository<UserModel> _userRepository = UserRepository();
   bool _isLoggedIn = false;
 
@@ -17,7 +30,7 @@ class AccountService {
   Future<UserModel?> signIn(String email, String password) async {
     await Future.delayed(const Duration(seconds: 2));
 
-    UserModel? user = _userRepository.findById(email);
+    UserModel? user = _userRepository.findByEmail(email);
 
     if (user != null && user.password == password) {
       _isLoggedIn = true;
@@ -64,5 +77,9 @@ class AccountService {
 
   void clear() {
     _userRepository.clear();
+  }
+
+  AccountService get() {
+    return _instance;
   }
 }

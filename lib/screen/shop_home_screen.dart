@@ -1,4 +1,6 @@
 import 'package:cabinetmaker_app/common/color_palette.dart';
+import 'package:cabinetmaker_app/screen/profile_screen.dart';
+import 'package:cabinetmaker_app/screen/shop/map_sale_points_screen.dart';
 import 'package:flutter/material.dart';
 
 class ShopHomeScreen extends StatelessWidget {
@@ -7,10 +9,6 @@ class ShopHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Cabinet Market'),
-        backgroundColor: ColorPalette.accentColor,
-      ),
       backgroundColor: ColorPalette.backgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(6),
@@ -108,6 +106,56 @@ class ShopItem extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ShopMenuNavigation extends StatefulWidget {
+  const ShopMenuNavigation({super.key});
+
+  @override
+  State<ShopMenuNavigation> createState() => _BottomNavigationBar();
+}
+
+class _BottomNavigationBar extends State<ShopMenuNavigation> {
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle = TextStyle(
+    fontSize: 30,
+    fontWeight: FontWeight.bold,
+  );
+  static final List<Widget> _widgetOptions = <Widget>[
+    const ShopHomeScreen(),
+    const MapSalePointsScreen(),
+    ProfileScreen(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('CabinetMarket'),
+        backgroundColor: ColorPalette.accentColor,
+      ),
+      body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.shop), label: 'Tienda'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.map),
+            label: 'Puntos de venta',
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
       ),
     );
   }

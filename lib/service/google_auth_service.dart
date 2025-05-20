@@ -1,9 +1,21 @@
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleAuthService {
+  // Singleton pattern
+  static final GoogleAuthService _instance = GoogleAuthService._internal();
+
+  factory GoogleAuthService() {
+    return _instance;
+  }
+
+  GoogleAuthService._internal();
+
+  // Google user
+  static GoogleSignInAccount? _googleUser;
+
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
 
-  GoogleSignInAccount? get currentUser => _googleSignIn.currentUser;
+  GoogleSignInAccount? get currentUser => _googleUser;
 
   Stream<GoogleSignInAccount?> get onCurrentUserChanged =>
       _googleSignIn.onCurrentUserChanged;
@@ -16,7 +28,7 @@ class GoogleAuthService {
       }
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
-
+      _googleUser = googleUser;
       return googleUser;
     } catch (error) {
       print('Error signing in with Google: $error');
@@ -27,4 +39,6 @@ class GoogleAuthService {
   Future<void> signOut() => _googleSignIn.signOut();
 
   Future<bool> isSignedIn() => _googleSignIn.isSignedIn();
+
+  GoogleAuthService get() => _instance;
 }
