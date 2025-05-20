@@ -1,13 +1,13 @@
 # Manual de usuario
 
-1. Introducción
-2. Requisitos del sistema
-3. Instalación
-4. Reporte de defectos visuales
-5. Resolucion de problemas
-6. Consejos de seguridad
-7. Terminos y condiciones
-8. Contacto y soporte tecnico
+1. [Introducción](#introduccion)
+2. [Requisitos del sistema](#requisitos-del-sistema)
+3. [Instalación] (#instalacion)
+4. [Reporte de defectos visuales](#reporte-de-defectos-visuales)
+5. [Resolucion de problemas](#resolucion-de-problemas)
+6. [Consejos de seguridad](#consejos-de-seguridad)
+7. [Términos y condiciones](#terminos-y-condiciones)
+8. [Contacto](#contacto)
 
 ## 1. Introducción
 
